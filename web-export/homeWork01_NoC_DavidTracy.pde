@@ -5,8 +5,8 @@ ArrayList<Joint> joints4;
 ArrayList<Joint> joints5;
 
 void setup() {
-  size(900, 900);
-  background(255);
+  size(600, 400);
+  background(0);
 
   joints1 = new ArrayList<Joint>();
   joints2 = new ArrayList<Joint>();
@@ -26,7 +26,7 @@ void setup() {
 void draw() {
 
   noStroke();
-  fill(255, 10);
+  fill(0, 0, 0, 10);
   rect(0, 0, width, height);
 
   for (int i = 0; i < joints1.size(); i++) {    
@@ -43,8 +43,7 @@ void draw() {
 
     println(j1.location.x);
     
-    stroke(0);
-    strokeWeight(3);
+    stroke(255,255,255);
     
     noFill();
     beginShape();
@@ -79,4 +78,37 @@ void draw() {
     //    }
   }
 }
+
+class Joint {
+
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float t1 = random(10);
+  float t2 = random(10);
+  float radius = 3;
+  color mColor = color(255, 255, 255);
+
+  Joint() { 
+    location = new PVector();
+  }
+  
+  void setColor( color newColor ) { mColor = newColor; }
+  float getRadius() { return radius; }
+  
+  void drawJoint() {
+
+    noStroke();
+    fill(mColor);
+
+    t1 += .001;
+    t2 += .002;
+
+    //the argument for noise() is time ... we need a variable t
+    location = new PVector(map(noise(t1), 0, 1, 0, width), map(noise(t2), 0, 1, 0, height));
+
+    ellipse(location.x, location.y, radius, radius);
+  }
+}
+
 
